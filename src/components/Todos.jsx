@@ -3,6 +3,7 @@
 
    
    function Todos() {
+            const [filter, setFilter] = useState('all')
             const [text, setText] = useState('')
             const [todos, setTodos] = useState([])
    function handleSubmit(e) {
@@ -34,7 +35,14 @@
         }  
         
      const activeCount = todos.filter((todo) => !todo.completed).length
-     const allCompleted = activeCount === 0  
+     const allCompleted = activeCount === 0
+     
+     let visibleTodos = todos
+        if (filter === 'active') {
+        visibleTodos = todos.filter((todo) => !todo.completed)
+        } else if (filter === 'completed') {
+        visibleTodos = todos.filter((todo) => todo.completed)
+        }
 
      return (
     <section className="mx-auto max-w-[550px]">
@@ -68,7 +76,7 @@
                     <span className="rotate-90">❯</span>
                 </label>
                 <ul>
-                    {todos.map((todo) => (
+                    {visibleTodos.map((todo) =>(
                     <li
                         key={todo.id}
                         className="group relative flex items-center border-b border-[#ededed] text-2xl"
@@ -100,34 +108,61 @@
                 </ul>
             </main>
                     </main>
-             <footer className="grid h-10 ...">
-                        <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-[15px] text-[15px]">
+             <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-[15px] text-[15px]">
                 <span>
-                    <strong className="font-light">{activeCount}</strong> {activeCount === 1 ? 'item' : 'items'} left</span>
+                    <strong className="font-light">{activeCount}</strong> {activeCount === 1 ? 'item' : 'items'} left
+                </span>
                 <ul className="flex justify-center gap-1">
                     <li>
-                        <button type="button" className="cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]">All</button>
-                    </li>
-                    <li> 
-                        <button type="button" className="cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10" >Active</button>
+                    <button
+                        type="button"
+                        onClick={() => setFilter('all')}
+                        className={
+                        filter === 'all'
+                            ? 'cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]'
+                            : 'cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10'
+                        }
+                    >
+                        All
+                    </button>
                     </li>
                     <li>
-                        <button
+                    <button
                         type="button"
-                        className="cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10"
-                        >
+                        onClick={() => setFilter('active')}
+                        className={
+                        filter === 'active'
+                            ? 'cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]'
+                            : 'cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10'
+                        }
+                    >
+                        Active
+                    </button>
+                    </li>
+                    <li>
+                    <button
+                        type="button"
+                        onClick={() => setFilter('completed')}
+                        className={
+                        filter === 'completed'
+                            ? 'cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]'
+                            : 'cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10'
+                        }
+                    >
                         Completed
-                        </button>
+                    </button>
                     </li>
                 </ul>
-                <button
+                {todos.length - activeCount > 0 && (
+                    <button
                     type="button"
                     onClick={handleClearCompleted}
-                    className="cursor-pointer justify-self-end hover:underline">
+                    className="cursor-pointer justify-self-end hover:underline"
+                    >
                     Clear completed
-                </button>
+                    </button>
+                )}
             </footer>
-         </footer>
                 </>
                 )}
 
