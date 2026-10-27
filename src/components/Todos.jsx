@@ -24,7 +24,9 @@
         }
      function handleDelete(id) {
         setTodos(todos.filter((todo) => todo.id !== id))
-        }   
+        }
+        
+     const activeCount = todos.filter((todo) => !todo.completed).length  
 
      return (
     <section className="mx-auto max-w-[550px]">
@@ -44,15 +46,7 @@
             {todos.length > 0 && (
                 <>
                     <main className="relative border-t border-[#e6e6e6]">
-                    ...everything in main...
-                    </main>
-                    <footer className="grid h-10 ...">
-                    ...everything in footer...
-                    </footer>
-                </>
-                )}
-
-            <main className="relative border-t border-[#e6e6e6]">
+                        <main className="relative border-t border-[#e6e6e6]">
                 <input id="toggle-all" type="checkbox" className="peer sr-only" />
                 <label
                     htmlFor="toggle-all"
@@ -91,9 +85,11 @@
                     ))}
                 </ul>
             </main>
-            <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-[15px] text-[15px]">
+                    </main>
+             <footer className="grid h-10 ...">
+                        <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-[15px] text-[15px]">
                 <span>
-                    <strong className="font-light">1</strong> item left </span>
+                    <strong className="font-light">{activeCount}</strong> {activeCount === 1 ? 'item' : 'items'} left</span>
                 <ul className="flex justify-center gap-1">
                     <li>
                         <button type="button" className="cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]">All</button>
@@ -112,6 +108,12 @@
                 </ul>
                 <button type="button" className="cursor-pointer justify-self-end hover:underline"> Clear completed</button>
             </footer>
+         </footer>
+                </>
+                )}
+
+            
+            
 
         </div>
     </section>
