@@ -28,9 +28,13 @@
 
      function handleClearCompleted() {
         setTodos(todos.filter((todo) => !todo.completed))
-        }   
+        }
+    function handleToggleAll() {
+        setTodos(todos.map((todo) => ({ ...todo, completed: !allCompleted })))
+        }  
         
-     const activeCount = todos.filter((todo) => !todo.completed).length  
+     const activeCount = todos.filter((todo) => !todo.completed).length
+     const allCompleted = activeCount === 0  
 
      return (
     <section className="mx-auto max-w-[550px]">
@@ -51,7 +55,13 @@
                 <>
                     <main className="relative border-t border-[#e6e6e6]">
                         <main className="relative border-t border-[#e6e6e6]">
-                <input id="toggle-all" type="checkbox" className="peer sr-only" />
+                <input
+                    id="toggle-all"
+                    type="checkbox"
+                    checked={allCompleted}
+                    onChange={handleToggleAll}
+                    className="peer sr-only"
+                    />
                 <label
                     htmlFor="toggle-all"
                     className="absolute -top-[66px] left-0 flex h-[65px] w-[60px] cursor-pointer items-center justify-center text-[22px] text-[#949494] peer-checked:text-[#484848]">
